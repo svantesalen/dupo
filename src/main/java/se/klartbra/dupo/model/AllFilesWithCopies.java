@@ -1,8 +1,10 @@
 package se.klartbra.dupo.model;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -64,6 +66,14 @@ public class AllFilesWithCopies {
 		return true;
 	}
 
+	public int size() {
+		return allFileWithCopiesMap.size();
+	}
+	
+	public List<FileWithCopies> toArray() {
+		return new ArrayList<>(allFileWithCopiesMap.values());
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -71,7 +81,6 @@ public class AllFilesWithCopies {
 		for(FileWithCopies fileWithCopies: allFileWithCopiesMap.values()) {
 			sb.append("\n---------------------------------\n");
 			sb.append(fileWithCopies.toString());
-			sb.append("\n---------------------------------\n");
 		}
 		return sb.toString().trim();
 	}

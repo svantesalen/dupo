@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 import se.klartbra.dupo.model.AllFilesWithCopies;
 
 public class CopyFinder {
-	private Logger log = LogManager.getLogger(CopyFinder.class);
+	private static Logger log = LogManager.getLogger(CopyFinder.class);
 	private AllFilesWithCopies allFilesWithCopies = new AllFilesWithCopies();
 
 	public AllFilesWithCopies getAllFilesWithCopies() {

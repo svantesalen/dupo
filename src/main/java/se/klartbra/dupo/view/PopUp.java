@@ -9,6 +9,12 @@ import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
+/**
+ * A helper class to facilitate the use of JFileChooser and JOptionPane.
+ * @author svante
+ *
+ */
 public class PopUp {
 
 	private static Logger log = LogManager.getLogger(PopUp.class);
@@ -18,6 +24,14 @@ public class PopUp {
 
 	private PopUp() {}
 
+	public static void errorMessage(Component component, String message) {
+		JOptionPane.showMessageDialog(component, message, "ERROR", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public static void infoMessage(Component component, String message) {
+		JOptionPane.showMessageDialog(component, message, "INFO", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 	/**
 	 * PopUp: chose directories.
 	 * 
@@ -35,7 +49,7 @@ public class PopUp {
 	public static File[] letUserChooseFiles() {
 		return letUserChooseFromFileSystem(JFileChooser.FILES_ONLY);
 	}
-
+	
 	private static File[] letUserChooseFromFileSystem(int mode) {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setMultiSelectionEnabled(true);
