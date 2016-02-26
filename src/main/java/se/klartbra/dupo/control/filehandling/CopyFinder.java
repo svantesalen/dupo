@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,23 +21,26 @@ public class CopyFinder {
 		return allFilesWithCopies;
 	}
 
-	/**
-	 * Find directory copies in a list. 
-	 * @param directories
-	 * @return
-	 */
-	public List<File> findCopies(List<File> directories) {
-		List<File> copies = new ArrayList<>();
-		for(int i=0; i<directories.size(); i++) {
-			copies.addAll(findCopies(directories.get(i), directories, i+1));
-		}
-		return copies;
-	}
+//	/**
+//	 * Find directory copies in a list. 
+//	 * @param directories
+//	 * @return
+//	 */
+//	//	public List<File> findCopies(List<File> directories) {
+//	public void findCopies(List<File> directories) {
+//		List<File> copies = new ArrayList<>();
+//		for(int i=0; i<directories.size(); i++) {
+//			//			copies.addAll(findCopies(directories.get(i), directories, i+1));
+//			findCopies(directories.get(i), directories, i+1);
+//		}
+//		//		return copies;
+//	}
 
-	private List<File> findCopies(File dir, List<File> list, int startIndex) {
+	
+	public boolean findCopies(File dir, List<File> list, int startIndex) {
 		log.debug("Find copies for: "+dir.getAbsolutePath());
+		boolean found = false;
 		File lastCopy = null;
-		List<File> copies = new ArrayList<>();
 		for(int i=startIndex; i<list.size(); i++) {
 			if(lastCopy !=null) {
 				// Avoid unnecessary work: 
@@ -55,15 +57,12 @@ public class CopyFinder {
 			}			
 			if(areCopies(dir, list.get(i))) {
 				log.debug("Found a copy: "+list.get(i).getAbsolutePath());
-				copies.add(list.get(i));
 				allFilesWithCopies.add(dir, list.get(i));
 				lastCopy = list.get(i);
+				found = true;
 			}
 		}
-		if(!copies.isEmpty()) {
-			copies.add(0, dir);
-		}
-		return copies;
+		return found;
 	}	
 
 	/**

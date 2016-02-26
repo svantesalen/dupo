@@ -25,8 +25,9 @@ public class ButtonPanel {
 
 	private JPanel jPanel = new JPanel();
 	private FocusableButton findCopiesButton;
-	private FocusableButton deleteCopiesButton;
+	private FocusableButton breakButton;
 	private JButton helpButton;
+	private boolean isFinding = false;
 
 	public ButtonPanel() {
 		instance = this;
@@ -36,6 +37,10 @@ public class ButtonPanel {
 
 	public static ButtonPanel getInstance() {
 		return instance;
+	}
+	
+	public boolean isFinding() {
+		return isFinding;
 	}
 
 	private void addComponents() {
@@ -49,13 +54,14 @@ public class ButtonPanel {
 		setBorder(findCopiesButton);
 		jPanel.add(findCopiesButton);
 
-		deleteCopiesButton = new DeleteButton(Words.get("DELETE_DUPLICATES_BUTTON"));
-		deleteCopiesButton.setToolTipText(getParam("DELETE_DUPLICATES_BUTTON_TOOLTIP"));
-		deleteCopiesButton.setBackground(DupoTheme.bgColor);
-		deleteCopiesButton.setForeground(DupoTheme.button_txt);
-		deleteCopiesButton.setFont(DupoTheme.buttons);
-		setBorder(deleteCopiesButton);
-//		jPanel.add(deleteCopiesButton);
+		breakButton = new BreakButton(Words.get("BREAK_DUPLICATES_BUTTON"));
+		breakButton.setToolTipText(getParam("BREAK_DUPLICATES_BUTTON_TOOLTIP"));
+		breakButton.setBackground(DupoTheme.bgColor);
+		breakButton.setForeground(DupoTheme.button_txt);
+		breakButton.setFont(DupoTheme.buttons);
+		breakButton.setVisible(false);
+		setBorder(breakButton);
+		jPanel.add(breakButton);
 
 		Icon icon = ImageLoader.createIcon(ImagePaths.QUESTIONMARK_ICON_PATH, 40, 40);
 		helpButton = new JButton(icon);
@@ -103,4 +109,11 @@ public class ButtonPanel {
 	public void setFindFocus() {
 		findCopiesButton.requestFocus();
 	}
+
+	public void finding(boolean isFinding) {
+		this.isFinding = isFinding;
+		findCopiesButton.setVisible(!isFinding);
+		breakButton.setVisible(isFinding);
+	}
+
 }

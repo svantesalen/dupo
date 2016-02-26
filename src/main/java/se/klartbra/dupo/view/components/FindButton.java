@@ -31,7 +31,7 @@ public class FindButton extends FocusableButton { // NOSONAR
 	@Override
 	protected void handleActionEvent(ActionEvent e) {
 		onClick();
-	}
+	} 
 
 	private void onClick() {
 		Controller.getInstance().onFindCopiesButtonClick();

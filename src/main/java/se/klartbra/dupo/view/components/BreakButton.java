@@ -6,12 +6,16 @@ import java.awt.event.KeyEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import se.klartbra.dupo.control.language.Words;
+import se.klartbra.dupo.view.PopUp;
+import se.klartbra.dupo.view.PopUp.Answer;
+
 @SuppressWarnings("serial")
-public class DeleteButton extends FocusableButton { // NOSONAR
+public class BreakButton extends FocusableButton { // NOSONAR
 
-	private static Logger log = LogManager.getLogger(DeleteButton.class);
+	private static Logger log = LogManager.getLogger(BreakButton.class);
 
-	public DeleteButton(String txt) {
+	public BreakButton(String txt) {
 		super(txt);
 	}
 
@@ -20,7 +24,6 @@ public class DeleteButton extends FocusableButton { // NOSONAR
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 			log.debug("CR key code:"+e.getKeyCode());					
 			onClick();
-
 		} else {
 			log.debug("Not a CR key code:"+e.getKeyCode());					
 		}				
@@ -32,7 +35,10 @@ public class DeleteButton extends FocusableButton { // NOSONAR
 	}
 
 	private void onClick() {
-		log.debug("DELETE!");
+		Answer answer = PopUp.question(this, Words.get("QUESTION_BREAK_TITLE"), Words.get("QUESTION_BREAK_TEXT"));
+		if(answer == Answer.YES) {
+			ButtonPanel.getInstance().finding(false);
+		}
 	}
 
 }

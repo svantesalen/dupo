@@ -70,6 +70,10 @@ public class AllFilesWithCopies {
 		return allFileWithCopiesMap.size();
 	}
 	
+	public boolean isEmpty() {
+		return allFileWithCopiesMap.isEmpty();
+	}
+	
 	public List<FileWithCopies> toArray() {
 		return new ArrayList<>(allFileWithCopiesMap.values());
 	}

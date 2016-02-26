@@ -7,10 +7,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import se.klartbra.dupo.control.filehandling.CopyFinder;
 import se.klartbra.dupo.control.filehandling.FileOperations;
 import se.klartbra.dupo.control.language.Words;
-import se.klartbra.dupo.model.AllFilesWithCopies;
 import se.klartbra.dupo.view.MainWindow;
 import se.klartbra.dupo.view.PopUp;
 import se.klartbra.dupo.view.PopUp.Answer;
@@ -28,36 +26,57 @@ public class Controller {
 		}
 		return instance;
 	}
-
+//
+//	/**
+//	 * Method called when user hits the button.
+//	 */
+//	public void onFindCopiesButtonClick2() {
+//		List<File> directories = getDirectoriesToCompare();
+//		if(directories.isEmpty()) {
+//			return;
+//		}
+//		log.debug("Selected directories:\n"+toString(directories));
+//		MainWindow.getInstance().setText(Words.get("MESSAGE_LOOKING_FOR_COPIES")+":\n");
+//		MainWindow.getInstance().addText(toString(directories));
+//		addSubDirectories(directories);
+//		log.debug("Selected sub directories:\n"+toString(directories));
+//		CopyFinder copyFinder = new CopyFinder();
+//		copyFinder.findCopies(directories);
+//		if(copyFinder.getAllFilesWithCopies().isEmpty()) {
+//			MainWindow.getInstance().setText(Words.get("MESSAGE_NO_COPIES_FOUND"));
+//		} else {
+//			AllFilesWithCopies allFilesWithCopies = copyFinder.getAllFilesWithCopies();
+//			allFilesWithCopies.cleanUp();
+//			MainWindow.getInstance().setText(allFilesWithCopies.toString());
+//			MainWindow.getInstance().populateListPanel(allFilesWithCopies);
+//		}
+//	}
+//	
+//	public void onFindCopiesButtonClickOld() {
+//		List<File> directories = getDirectoriesToCompare();
+//		if(directories.isEmpty()) {
+//			return;
+//		}
+//		log.debug("Selected directories:\n"+toString(directories));
+//		MainWindow.getInstance().setText(Words.get("MESSAGE_LOOKING_FOR_COPIES")+":\n");
+//		MainWindow.getInstance().addText(toString(directories));
+//		addSubDirectories(directories);
+//		log.debug("Selected sub directories:\n"+toString(directories));
+//		CopyFinder copyFinder = new CopyFinder();
+//		List<File> copies = copyFinder.findCopies(directories);
+//		if(copies.isEmpty()) {
+//			MainWindow.getInstance().setText(Words.get("MESSAGE_NO_COPIES_FOUND"));
+//		} else {
+//			AllFilesWithCopies allFilesWithCopies = copyFinder.getAllFilesWithCopies();
+//			allFilesWithCopies.cleanUp();
+//			MainWindow.getInstance().setText(allFilesWithCopies.toString());
+//			MainWindow.getInstance().populateListPanel(allFilesWithCopies);
+//		}
+//	}
+//	
 	/**
 	 * Method called when user hits the button.
-	 */
-	public void onFindCopiesButtonClickOld() {
-		List<File> directories = getDirectoriesToCompare();
-		if(directories.isEmpty()) {
-			return;
-		}
-		log.debug("Selected directories:\n"+toString(directories));
-		MainWindow.getInstance().setText(Words.get("MESSAGE_LOOKING_FOR_COPIES")+":\n");
-		MainWindow.getInstance().addText(toString(directories));
-		addSubDirectories(directories);
-		log.debug("Selected sub directories:\n"+toString(directories));
-		CopyFinder copyFinder = new CopyFinder();
-		List<File> copies = copyFinder.findCopies(directories);
-		if(copies.isEmpty()) {
-			MainWindow.getInstance().setText(Words.get("MESSAGE_NO_COPIES_FOUND"));
-		} else {
-			AllFilesWithCopies allFilesWithCopies = copyFinder.getAllFilesWithCopies();
-			allFilesWithCopies.cleanUp();
-			MainWindow.getInstance().setText(allFilesWithCopies.toString());
-			MainWindow.getInstance().populateListPanel(allFilesWithCopies);
-			
-		}
-	}
-	
-	/**
-	 * Method called when user hits the button.
-	 */
+	 */ 
 	public void onFindCopiesButtonClick() {
 		List<File> directories = getDirectoriesToCompare();
 		if(directories.isEmpty()) {
@@ -67,18 +86,9 @@ public class Controller {
 		MainWindow.getInstance().setText(Words.get("MESSAGE_LOOKING_FOR_COPIES")+":\n");
 		MainWindow.getInstance().addText(toString(directories));
 		addSubDirectories(directories);
-		log.debug("Selected sub directories:\n"+toString(directories));
-		CopyFinder copyFinder = new CopyFinder();
-		List<File> copies = copyFinder.findCopies(directories);
-		if(copies.isEmpty()) {
-			MainWindow.getInstance().setText(Words.get("MESSAGE_NO_COPIES_FOUND"));
-		} else {
-			AllFilesWithCopies allFilesWithCopies = copyFinder.getAllFilesWithCopies();
-			allFilesWithCopies.cleanUp();
-			MainWindow.getInstance().setText(allFilesWithCopies.toString());
-			MainWindow.getInstance().populateListPanel(allFilesWithCopies);
-			
-		}
+		Worker worker = new Worker(directories);
+		worker.execute();
+		
 	}
 
 	private void addSubDirectories(List<File> directories) {

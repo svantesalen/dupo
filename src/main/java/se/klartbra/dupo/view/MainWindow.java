@@ -51,7 +51,7 @@ public class MainWindow {
 
 		mainFrame = new JFrame();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setPreferredSize(new Dimension(710, 710));
+		mainFrame.setPreferredSize(new Dimension(1000,710));
 		mainFrame.add(contentPane);
 		mainFrame.setContentPane(contentPane);
 		mainFrame.pack();
@@ -69,6 +69,10 @@ public class MainWindow {
 		dupoTextArea.addText(text);
 	}
 
+	public void addSearchInfoText(String text) {
+		dupoTextArea.addSearchInfoText(text);
+	}
+
 	private void addComponentsToPane(JComponent contentPane) {
 		contentPane.add(dupoListPanel.getPanel(), BorderLayout.WEST);
 		contentPane.add(dupoTextArea.getScrollPane(), BorderLayout.CENTER);
@@ -78,4 +82,9 @@ public class MainWindow {
 	public void populateListPanel(AllFilesWithCopies allFilesWithCopies) {
 		dupoListPanel.populate(allFilesWithCopies);
 	}
+	
+	public void setFinding(boolean isFinding) {
+			buttonPanel.finding(isFinding);
+	}
+	
 }
