@@ -74,4 +74,13 @@ class PopUpListener extends MouseAdapter {
 			popup.show(e.getComponent(), e.getX(), e.getY());
 		}
 	}
+	
+	public void repaint() {
+		settingsMenu.setText(Words.get("POPUP_MENU_ITEM_SETTINGS"));
+		copyItem.setText(Words.get("POPUP_MENU_ITEM_COPY"));
+		languageItem.setText(Words.get("POPUP_MENU_ITEM_LANGUAGE"));
+//		popup.repaint();
+//		settingsMenu.repaint();
+		
+	}
 }

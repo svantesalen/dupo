@@ -12,27 +12,44 @@ import javax.swing.border.TitledBorder;
 
 import se.klartbra.dupo.control.language.LanguageController;
 import se.klartbra.dupo.control.language.Words;
+import se.klartbra.dupo.model.FileWithCopies;
 import se.klartbra.dupo.view.look.DupoTheme;
 
+/**
+ * A text area used for:
+ * <ul>
+ * <li>list all copies within the selected {@link FileWithCopies}</li>
+ * <li>show messages during search</li>
+ * </ul>
+ * 
+ * @author svante
+ * 
+ */
 public class DupoTextArea implements PopUpHandler {
 	private static DupoTextArea instance;
 	private JTextPane textPane  = new JTextPane();
 	private JScrollPane scrollPane;
 	private DupoTextAreaStyledDocument styledDoc;
+	private TitledBorder border;
+	private PopUpListener popUpListener;
 
+	/**
+	 * CTOR
+	 */
 	public DupoTextArea() {
 		instance = this;
-		
+
 		textPane.setText("");
 		textPane.setBackground(DupoTheme.bgColor);
-        scrollPane  = new JScrollPane(textPane);
+		scrollPane  = new JScrollPane(textPane);
 		scrollPane.setBackground(DupoTheme.bgColor);
-		
+
 		initiateBorders();
 		initiateContetns();
-		
-		textPane.addMouseListener(new PopUpListener(this));
-		}
+
+		popUpListener = new PopUpListener(this);
+		textPane.addMouseListener(popUpListener);
+	}
 
 	public static DupoTextArea getInstance() {
 		return instance;
@@ -63,21 +80,21 @@ public class DupoTextArea implements PopUpHandler {
 	public void addText(String text) {
 		styledDoc.insertTypeText(text);
 	}
-	
+
 	public void addSearchInfoText(String text) {
 		styledDoc.insertHeaderText(text);
 	}
-	
+
 	public String getText() {
 		return textPane.getText();
 	}
-	
+
 	private void initiateBorders() {
-		TitledBorder border = BorderFactory.createTitledBorder(Words.get("BORDER_TEXT_DETAILS"));
+		border = BorderFactory.createTitledBorder(Words.get("BORDER_TEXT_DETAILS"));
 		border.setTitleFont(DupoTheme.borderTitleFont);
 		border.setTitleColor(DupoTheme.borderTitleColor);
 		textPane.setBorder(border);
-		
+
 		Border emptyBorder = BorderFactory.createEmptyBorder();
 		scrollPane.setBorder(emptyBorder);		
 	}
@@ -97,4 +114,11 @@ public class DupoTextArea implements PopUpHandler {
 	public void language() {
 		LanguageController.newLanguage();		
 	}
+
+	public void repaint() {
+		border.setTitle(Words.get("BORDER_TEXT_DETAILS"));
+		textPane.repaint();
+		popUpListener.repaint();
+	}
+
 }

@@ -115,5 +115,13 @@ public class ButtonPanel {
 		findCopiesButton.setVisible(!isFinding);
 		breakButton.setVisible(isFinding);
 	}
+	
+	public void repaint() {
+		findCopiesButton.setText(Words.get("FIND_DUPLICATES_BUTTON"));
+		findCopiesButton.setToolTipText(getParam("FIND_DUPLICATES_BUTTON_TOOLTIP"));	
+		breakButton.setText(Words.get("BREAK_DUPLICATES_BUTTON"));
+		helpButton.setToolTipText(Words.get("HELP_BUTTON_TOOLTIP"));
+		breakButton.setToolTipText(getParam("BREAK_DUPLICATES_BUTTON_TOOLTIP"));
+	}
 
 }

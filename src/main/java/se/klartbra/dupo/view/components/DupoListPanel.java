@@ -28,8 +28,14 @@ import se.klartbra.dupo.model.FileWithCopies;
 import se.klartbra.dupo.view.look.Colors;
 import se.klartbra.dupo.view.look.DupoTheme;
 
+/**
+ * A list of {@link FileWithCopies} found during a search.
+ * 
+ * @author svante
+ *
+ */
 public class DupoListPanel implements ListSelectionListener {
-	private static final int MAX_ROWS = 23;
+	private static final int MAX_ROWS = 15;
 
 	private static Logger log = LogManager.getLogger(DupoListPanel.class);
 	private static DupoListPanel instance;
@@ -37,6 +43,7 @@ public class DupoListPanel implements ListSelectionListener {
 	private JPanel jPanel = new JPanel();
 	private DefaultListModel<String> jListModel = new DefaultListModel<>();
 	private JList<String> jList;
+	TitledBorder border;
 	private AllFilesWithCopies allFilesWithCopies;
 
 	/**
@@ -66,6 +73,7 @@ public class DupoListPanel implements ListSelectionListener {
 		if(allFilesWithCopies.size() == 0) {
 			return;
 		}
+		jList.setSize(jList.getWidth()+100, jList.getHeight());
 		this.allFilesWithCopies = allFilesWithCopies;
 		for(FileWithCopies fileWithCopies: allFilesWithCopies.toArray()) {
 			jListModel.addElement(fileWithCopies.getFile().getName());
@@ -102,7 +110,7 @@ public class DupoListPanel implements ListSelectionListener {
 					boolean cellHasFocus) 
 			{
 				JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected,cellHasFocus);
-				listCellRendererComponent.setBorder(BorderFactory.createMatteBorder(0, 0, 6, 0,DupoTheme.bgColor));
+				listCellRendererComponent.setBorder(BorderFactory.createMatteBorder(4, 1, 6, 4,DupoTheme.bgColor));
 				if(isSelected) {
 					listCellRendererComponent.setBackground(DupoTheme.jListFontSelectedItemColor);
 					listCellRendererComponent.setFont(DupoTheme.jListFontSelectedItem);
@@ -114,7 +122,7 @@ public class DupoListPanel implements ListSelectionListener {
 
 	private void initiateBorders(JScrollPane listScrollPane) {		
 		listScrollPane.setBorder(BorderFactory.createEmptyBorder());
-		TitledBorder border = BorderFactory.createTitledBorder(Words.get("BORDER_TEXT_COPIES"));
+		border = BorderFactory.createTitledBorder(Words.get("BORDER_TEXT_COPIES"));
 		border.setTitleFont(DupoTheme.borderTitleFont);
 		border.setTitleColor(DupoTheme.borderTitleColor);
 		jPanel.setBorder(border);
@@ -143,6 +151,10 @@ public class DupoListPanel implements ListSelectionListener {
 		return instance; 
 	}
 
+	/**
+	 * User selected another jList cell.
+	 * @param e
+	 */
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting()||jList.getSelectedIndex()<0) {
@@ -155,6 +167,10 @@ public class DupoListPanel implements ListSelectionListener {
 		textArea.setText(contents);
 		DupoTextArea.getInstance().setCaretTopOfDoc();
 
+	}
+	public void repaint() {
+		border.setTitle(Words.get("BORDER_TEXT_COPIES"));
+		jPanel.repaint();
 	}
 
 }

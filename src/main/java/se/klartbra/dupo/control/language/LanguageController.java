@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import se.klartbra.dupo.view.MainWindow;
 import se.klartbra.dupo.view.PopUp;
 
 public class LanguageController {
@@ -19,12 +20,12 @@ public class LanguageController {
 
 
 	private static Language currentLanguage = DEFAULT_LANGUAGE;
-	private static String message = "Språk - Language - Idioma";
-	private static String title = "Välj - Select - Seleccionar";
+	private static String message = "Språk (Language)";
+	private static String title = "Välj (Select)";
 	private LanguageController() {}
 
 	public enum Language {
-		ENGLISH("en"), SPANISH("esp"), SWEDISH("se");
+		ENGLISH("en"), SWEDISH("se");
 		private static final String BUNDLE_NAME = "i18n.LangBundle";
 		private static final String BUNDLE_PATH = "resources.i18n.LangBundle";
 		private String localeSuffix;
@@ -89,8 +90,9 @@ public class LanguageController {
 			return;
 		}
 		setLanguage(newLanguage);
+		MainWindow.getInstance().repaint();
 	}
-	
+
 	private static boolean runningFromJar() {
 		URL url = LanguageController.class.getResource("LanguageController.class");
 		String path = url.toString();

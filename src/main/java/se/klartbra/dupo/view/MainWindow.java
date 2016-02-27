@@ -87,4 +87,10 @@ public class MainWindow {
 			buttonPanel.finding(isFinding);
 	}
 	
+	public void repaint() {
+		buttonPanel.repaint();
+		dupoListPanel.repaint();
+		dupoTextArea.repaint();
+	}
+	
 }

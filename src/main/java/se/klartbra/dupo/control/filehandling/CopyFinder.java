@@ -13,6 +13,12 @@ import org.apache.logging.log4j.Logger;
 
 import se.klartbra.dupo.model.AllFilesWithCopies;
 
+/**
+ * Finds copies of directories.
+ * 
+ * @author svante
+ *
+ */
 public class CopyFinder {
 	private static Logger log = LogManager.getLogger(CopyFinder.class);
 	private AllFilesWithCopies allFilesWithCopies = new AllFilesWithCopies();
@@ -21,22 +27,13 @@ public class CopyFinder {
 		return allFilesWithCopies;
 	}
 
-//	/**
-//	 * Find directory copies in a list. 
-//	 * @param directories
-//	 * @return
-//	 */
-//	//	public List<File> findCopies(List<File> directories) {
-//	public void findCopies(List<File> directories) {
-//		List<File> copies = new ArrayList<>();
-//		for(int i=0; i<directories.size(); i++) {
-//			//			copies.addAll(findCopies(directories.get(i), directories, i+1));
-//			findCopies(directories.get(i), directories, i+1);
-//		}
-//		//		return copies;
-//	}
-
-	
+	/**
+	 * Find a copy of given directory in a list of directories.
+	 * @param dir The given directory
+	 * @param list A list of directories.
+	 * @param startIndex Start position
+	 * @return true if copies were found, else fale
+	 */
 	public boolean findCopies(File dir, List<File> list, int startIndex) {
 		log.debug("Find copies for: "+dir.getAbsolutePath());
 		boolean found = false;
@@ -72,6 +69,10 @@ public class CopyFinder {
 	 * @return true if same
 	 */
 	private boolean areCopies(File dir1, File dir2) {
+		if(dir1 == dir2) {
+			log.error("This should never happen.");
+			return false;
+		}
 		if(FileOperations.inSameTree(dir1, dir2)) {
 			return false;
 		}

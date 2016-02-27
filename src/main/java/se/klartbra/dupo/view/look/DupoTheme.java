@@ -15,7 +15,7 @@ public class DupoTheme {
 	public static final Font buttons = new Font(getDefaultFontName(), Font.BOLD, 20);
 	public static final Font popUp = new Font(getDefaultFontName(), Font.PLAIN, 16);
 	public static final Font popUpHeading = new Font(getDefaultFontName(), Font.PLAIN, 18);
-	public static final Font jListFontSelectedItem = new Font(getDefaultFontName(), Font.BOLD, 16);
+	public static final Font jListFontSelectedItem = new Font(getDefaultFontName(), Font.PLAIN, 16);
 	public static final Font jListFont = new Font(getDefaultFontName(), Font.PLAIN, 16);
 	public static final Font borderTitleFont = new Font(getDefaultFontName(), Font.PLAIN, 13);
 	
