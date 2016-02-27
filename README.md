@@ -10,9 +10,9 @@ so I made this small program.
 The program can locate duplicate directories
 --------------------------------------------
 
-1) Press the Find button and select one or several directories.
-2) searching...
-3) Result is presented:
+- Press the Find button and select one or several directories.
+- searching...
+- Result is presented:
 
 The result:
 - For each directory that has a copy somewhere deep inside the trees of directories you selected,  
@@ -21,10 +21,10 @@ The result:
 
 What is considered a copy?
 Directories are copies if they contain:
-1) the same number of (plain) files.
-2) the same number of subdirectories
-3) the files in 1) are binary equal.
-4) the subdirectories are copies (see 1-3)
+- the same number of (plain) files.
+- the same number of subdirectories
+- the files in 1) are binary equal.
+- the subdirectories are copies (see 1-3)
 
 Improvements
 ------------
