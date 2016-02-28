@@ -13,6 +13,12 @@ import se.klartbra.dupo.view.MainWindow;
 import se.klartbra.dupo.view.PopUp;
 import se.klartbra.dupo.view.PopUp.Answer;
 
+/**
+ * This class is in charge of the searching, though it delegates the job to a SwingWorker thread.
+ * 
+ * @author svante
+ *
+ */
 public class Controller {
 
 	private static Logger log = LogManager.getLogger(Controller.class);

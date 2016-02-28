@@ -9,6 +9,12 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * A collection of file operations needed by other classes.
+ * 
+ * @author svante
+ *
+ */
 public class FileOperations {
 	private static Logger log = LogManager.getLogger(FileOperations.class);
 

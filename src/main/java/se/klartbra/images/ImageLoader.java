@@ -11,6 +11,12 @@ import javax.swing.ImageIcon;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Class that can load images from a file system path.
+ * 
+ * @author svante
+ *
+ */
 public class ImageLoader {
 	private static Logger log = LogManager.getLogger(ImageLoader.class);
 

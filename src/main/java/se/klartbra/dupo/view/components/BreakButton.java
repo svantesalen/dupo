@@ -10,6 +10,12 @@ import se.klartbra.dupo.control.language.Words;
 import se.klartbra.dupo.view.PopUp;
 import se.klartbra.dupo.view.PopUp.Answer;
 
+/**
+ * A button that breaks the current search for duplicates.
+ * 
+ * @author svante
+ *
+ */
 @SuppressWarnings("serial")
 public class BreakButton extends FocusableButton { // NOSONAR
 

@@ -14,6 +14,12 @@ import se.klartbra.dupo.control.language.Words;
 import se.klartbra.dupo.view.look.Colors;
 import se.klartbra.dupo.view.look.DupoTheme;
 
+/**
+ * A pop-up window used in {@link DupoTextArea}.
+ * 
+ * @author svante
+ *
+ */
 class PopUpListener extends MouseAdapter {
 	private JPopupMenu popup;
 	private PopUpHandler handler;

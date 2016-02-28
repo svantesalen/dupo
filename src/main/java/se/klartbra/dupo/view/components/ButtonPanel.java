@@ -19,6 +19,12 @@ import se.klartbra.dupo.view.look.DupoTheme;
 import se.klartbra.images.ImageLoader;
 import se.klartbra.images.ImagePaths;
 
+/**
+ * Panel with buttons.
+ * 
+ * @author svante
+ *
+ */
 public class ButtonPanel {
 
 	private static Logger log = LogManager.getLogger(ButtonPanel.class);
@@ -31,6 +37,9 @@ public class ButtonPanel {
 	private JButton languageButton;
 	private boolean isFinding = false;
 
+	/**
+	 * CTOR
+	 */
 	public ButtonPanel() {
 		instance = this;
 		addComponents();

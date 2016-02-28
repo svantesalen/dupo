@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * Use to start users browser (Firefox, Chrome...)
  *  
- *  @author svante
+ * @author svante
  *
  */
 public class HttpBrowserController {

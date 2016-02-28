@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Contains a set of directories that was found equal during a search.
+ * Contains the set of directories that was found equal during a search.
+ * 
  * @author svante
  *
  */

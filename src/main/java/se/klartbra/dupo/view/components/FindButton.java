@@ -7,7 +7,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import se.klartbra.dupo.control.Controller;
+/**
+ * A button that starts the find for duplicates.
 
+ * @author svante
+ *
+ */
 @SuppressWarnings("serial")
 public class FindButton extends FocusableButton { // NOSONAR
 

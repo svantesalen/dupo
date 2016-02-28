@@ -12,6 +12,12 @@ import org.apache.logging.log4j.Logger;
 import se.klartbra.dupo.view.MainWindow;
 import se.klartbra.dupo.view.PopUp;
 
+/**
+ * Change the language used in the application.
+ * 
+ * @author svante
+ *
+ */
 public class LanguageController {
 
 	private static Logger log = LogManager.getLogger(PopUp.class);
