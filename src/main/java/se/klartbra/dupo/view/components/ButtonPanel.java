@@ -10,9 +10,10 @@ import javax.swing.JPanel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import se.klartbra.dupo.control.language.LanguageController;
 import se.klartbra.dupo.control.language.Words;
-import se.klartbra.dupo.controller.network.HttpBrowserController;
-import se.klartbra.dupo.controller.network.Paths;
+import se.klartbra.dupo.control.network.HttpBrowserController;
+import se.klartbra.dupo.control.network.Paths;
 import se.klartbra.dupo.view.PopUp;
 import se.klartbra.dupo.view.look.DupoTheme;
 import se.klartbra.images.ImageLoader;
@@ -27,6 +28,7 @@ public class ButtonPanel {
 	private FocusableButton findCopiesButton;
 	private FocusableButton breakButton;
 	private JButton helpButton;
+	private JButton languageButton;
 	private boolean isFinding = false;
 
 	public ButtonPanel() {
@@ -38,7 +40,7 @@ public class ButtonPanel {
 	public static ButtonPanel getInstance() {
 		return instance;
 	}
-	
+
 	public boolean isFinding() {
 		return isFinding;
 	}
@@ -71,6 +73,15 @@ public class ButtonPanel {
 		helpButton.setFocusable(false);
 		addListener(helpButton);
 		jPanel.add(helpButton);	
+
+		icon = ImageLoader.createIcon(ImagePaths.FLAG_ICON_PATH, 40, 40);
+		languageButton = new JButton(icon);
+		languageButton.setToolTipText(Words.get("HELP_BUTTON_TOOLTIP"));
+		languageButton.setBorderPainted(false);
+		languageButton.setContentAreaFilled(false);
+		languageButton.setFocusable(false);
+		addListener(languageButton);
+		jPanel.add(languageButton);	
 	}
 
 	private void setBorder(JButton button) {
@@ -92,10 +103,11 @@ public class ButtonPanel {
 			JButton buttonClicked = (JButton) e.getSource();
 			if (buttonClicked == helpButton) {
 				handleHelp();
+			} else if (buttonClicked == languageButton) {
+				LanguageController.newLanguage();		
 			} else {
 				log.error("Program error. Undefined button clicked: " + buttonClicked.getName());
 			}
-
 		});
 	}
 
@@ -115,7 +127,7 @@ public class ButtonPanel {
 		findCopiesButton.setVisible(!isFinding);
 		breakButton.setVisible(isFinding);
 	}
-	
+
 	public void repaint() {
 		findCopiesButton.setText(Words.get("FIND_DUPLICATES_BUTTON"));
 		findCopiesButton.setToolTipText(getParam("FIND_DUPLICATES_BUTTON_TOOLTIP"));	

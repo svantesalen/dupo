@@ -75,14 +75,14 @@ public class DupoTextArea implements PopUpHandler {
 
 	public void setText(String text) {
 		textPane.setText("");
-		styledDoc.insertTypeText(text);
+		styledDoc.insertResultText(text);
 	}
 	public void addText(String text) {
-		styledDoc.insertTypeText(text);
+		styledDoc.insertResultText(text);
 	}
 
 	public void addSearchInfoText(String text) {
-		styledDoc.insertHeaderText(text);
+		styledDoc.insertProgressText(text);
 	}
 
 	public String getText() {

@@ -19,8 +19,8 @@ public class DupoTheme {
 	public static final Font jListFont = new Font(getDefaultFontName(), Font.PLAIN, 16);
 	public static final Font borderTitleFont = new Font(getDefaultFontName(), Font.PLAIN, 13);
 	
-	public static final Color textAreaHeaderColor = Colors.white;
-	public static final Color textAreaHeaderColor2 = Colors.lightGray;
+	public static final Color textAreaResultColor = Colors.white;
+	public static final Color textAreaProgressColor = Colors.lightYellow;
 
 	public static final Color button_txt = Colors.white;
 	public static final Color bgColor = Colors.blueGreen;

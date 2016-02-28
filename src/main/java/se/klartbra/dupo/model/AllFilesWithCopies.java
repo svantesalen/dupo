@@ -57,7 +57,7 @@ public class AllFilesWithCopies {
 	 */
 	public void cleanUp() {
 		
-		// TODO: remove this check (just used during developement)
+		// TODO: remove this check (just used during development)
 		for(Entry<File, FileWithCopies> entry: allFileWithCopiesMap.entrySet()) {
 			if(entry.getKey() != entry.getValue().getFile()) {
 				log.error("****** PROGRAM ERROR ******");;
@@ -65,7 +65,7 @@ public class AllFilesWithCopies {
 		}
 
 		
-//		concatenateDuplicates();
+		concatenateDuplicates();
 		
 		Set<FileWithCopies> removeSet  = new HashSet<>();
 		for(FileWithCopies fileWithCopies: allFileWithCopiesMap.values()) {
@@ -102,7 +102,7 @@ public class AllFilesWithCopies {
 			return false;
 		}
 		for(FileWithCopies fileWithCopiesToRemove: removeSet) {
-			log.debug("### remove since duplicate: \n"+ fileWithCopiesToRemove.toString());
+			log.error("################### SHOULD NEVER HAPPEN! remove since duplicate: \n"+ fileWithCopiesToRemove.toString());
 			allFileWithCopiesMap.remove(fileWithCopiesToRemove);
 		}
 		return true;

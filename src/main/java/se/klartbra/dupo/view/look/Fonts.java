@@ -20,9 +20,13 @@ import se.klartbra.dupo.start.StartHere;
  */
 public class Fonts {
 	private static final String FONT_FILE_PATH = "/resources/fonts/DroidSans.ttf";
-	private static Font applicationFont=null;
 	private static Logger log = LogManager.getLogger(Fonts.class);
+	private static Font applicationFont;
 
+
+	/**
+	 * No CTOR needed.
+	 */
 	private Fonts() {}
 
 	public static Font getApplicationFont() {

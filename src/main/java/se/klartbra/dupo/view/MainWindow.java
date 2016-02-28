@@ -83,10 +83,15 @@ public class MainWindow {
 		dupoListPanel.populate(allFilesWithCopies);
 	}
 	
-	public void setFinding(boolean isFinding) {
-			buttonPanel.finding(isFinding);
-	}
-	
+	public void startFinding() {
+		buttonPanel.finding(true);
+		dupoListPanel.clear();
+}
+
+	public void stopFinding() {
+		buttonPanel.finding(false);
+}
+
 	public void repaint() {
 		buttonPanel.repaint();
 		dupoListPanel.repaint();

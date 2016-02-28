@@ -39,7 +39,7 @@ public class Worker extends SwingWorker<AllFilesWithCopies, String>{
 	protected AllFilesWithCopies doInBackground() throws Exception {
 		int size = directories.size();
 		publish(Words.get("NUMBER_OF_DIR_TO_SEARCH")+ size);
-		MainWindow.getInstance().setFinding(true);
+		MainWindow.getInstance().startFinding();
 		CopyFinder copyFinder = new CopyFinder();
 		File currentDir;
 		for(int i=0; i<size; i++) {
@@ -49,39 +49,39 @@ public class Worker extends SwingWorker<AllFilesWithCopies, String>{
 			} else {
 				publish(Words.get("SEARCHING")+" ("+i+Words.get("OF")+size+") "+currentDir.getAbsolutePath());				
 			}			
-			
 			if(!ButtonPanel.getInstance().isFinding()) {	
 				break;
 			}
-
 		}
 		return copyFinder.getAllFilesWithCopies();
 	}
 
+	/**
+	 * Receive values from {@link Worker#publish(String...)}
+	 */
 	@Override
-	// Can safely update the GUI from this method.
 	protected void process(List<String> chunks) {
-		// Here we receive the values that we publish().
 		// They may come grouped in chunks.
 		String mostRecentValue = chunks.get(chunks.size()-1);
 		log.debug("mostRecentValue="+mostRecentValue);
 		MainWindow.getInstance().addSearchInfoText(mostRecentValue);
 	}
 
+	/**
+	 * Receive the return value from {@link Worker#doInBackground()}
+	 */
 	@Override
 	protected void done() {
-		MainWindow.getInstance().setFinding(false);
+		MainWindow.getInstance().stopFinding();
 		AllFilesWithCopies allFilesWithCopies;
 		try {
-			// Retrieve the return value of doInBackground.
 			allFilesWithCopies = get();
 			if(allFilesWithCopies.isEmpty()) {
 				MainWindow.getInstance().setText(Words.get("MESSAGE_NO_COPIES_FOUND"));
 			} else {
 				allFilesWithCopies.cleanUp();
-				MainWindow.getInstance().setText(allFilesWithCopies.toString());
-				MainWindow.getInstance().populateListPanel(allFilesWithCopies);
 			}
+			MainWindow.getInstance().populateListPanel(allFilesWithCopies);
 		} catch (InterruptedException e) {
 			log.error("Interrupted", e);
 		} catch (ExecutionException e) {

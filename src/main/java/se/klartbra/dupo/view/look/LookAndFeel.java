@@ -15,6 +15,7 @@ import se.klartbra.images.ImagePaths;
 
 /**
  * Set basic look and feel for the application.
+ * 
  * @author svante
  *
  */
@@ -22,6 +23,9 @@ public class LookAndFeel {
 
 	private static Logger log = LogManager.getLogger(LookAndFeel.class);
 
+	/**
+	 * No CTOR needed.
+	 */
 	private LookAndFeel() {}
 
 	public static void set() {

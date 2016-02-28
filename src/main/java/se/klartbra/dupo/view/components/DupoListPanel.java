@@ -70,6 +70,7 @@ public class DupoListPanel implements ListSelectionListener {
 	}
 
 	public void populate(AllFilesWithCopies allFilesWithCopies) {
+		jListModel.clear();
 		if(allFilesWithCopies.size() == 0) {
 			return;
 		}
@@ -80,6 +81,10 @@ public class DupoListPanel implements ListSelectionListener {
 			jList.setSelectedIndex(0);
 		}
 		jList.requestFocus();
+	}
+	
+	public void clear() {
+		jListModel.clear();
 	}
 
 	private void setupScrollableSelectionList(DefaultListModel<String> jListModel) {

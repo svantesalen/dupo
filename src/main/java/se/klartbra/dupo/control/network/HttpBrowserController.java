@@ -1,4 +1,4 @@
-package se.klartbra.dupo.controller.network;
+package se.klartbra.dupo.control.network;
 
 import java.awt.Desktop;
 import java.io.IOException;
