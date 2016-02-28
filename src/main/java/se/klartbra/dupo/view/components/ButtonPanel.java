@@ -85,7 +85,7 @@ public class ButtonPanel {
 
 		icon = ImageLoader.createIcon(ImagePaths.FLAG_ICON_PATH, 40, 40);
 		languageButton = new JButton(icon);
-		languageButton.setToolTipText(Words.get("HELP_BUTTON_TOOLTIP"));
+		languageButton.setToolTipText(Words.get("LANGUAGE_BUTTON_TOOLTIP"));
 		languageButton.setBorderPainted(false);
 		languageButton.setContentAreaFilled(false);
 		languageButton.setFocusable(false);
@@ -143,6 +143,7 @@ public class ButtonPanel {
 		breakButton.setText(Words.get("BREAK_DUPLICATES_BUTTON"));
 		helpButton.setToolTipText(Words.get("HELP_BUTTON_TOOLTIP"));
 		breakButton.setToolTipText(getParam("BREAK_DUPLICATES_BUTTON_TOOLTIP"));
+		languageButton.setToolTipText(Words.get("LANGUAGE_BUTTON_TOOLTIP"));
 	}
 
 }
