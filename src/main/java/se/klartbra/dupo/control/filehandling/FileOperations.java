@@ -60,9 +60,12 @@ public class FileOperations {
 	 */
 	public static List<File> getSubdirsNonrecursive(File dir) {
 		List<File> subDirectories = new ArrayList<>();
-		for(File file: dir.listFiles()) {
-			if(file.isDirectory()) {
-				subDirectories.add(file);
+		File[] files = dir.listFiles();
+		if(files != null) {
+			for(File file: files) {
+				if(file.isDirectory()) {
+					subDirectories.add(file);
+				}
 			}
 		}
 		return subDirectories;
@@ -75,10 +78,12 @@ public class FileOperations {
 	 */
 	public static List<File> getFilesNonrecursively(File dir) {
 		List<File> plainFiles = new ArrayList<>();
-
-		for(File file: dir.listFiles()) {
-			if(file.isFile()) {
-				plainFiles.add(file);
+		File[] files = dir.listFiles();
+		if(files != null) {
+			for(File file: files) {
+				if(file.isFile()) {
+					plainFiles.add(file);
+				}
 			}
 		}
 		return plainFiles;

@@ -118,6 +118,10 @@ public class AllFilesWithCopies {
 		return true;
 	}
 
+	public boolean contains(File file) {
+		return allFiles.contains(file);
+	}
+	
 	public int size() {
 		return allFileWithCopiesMap.size();
 	}
@@ -132,8 +136,10 @@ public class AllFilesWithCopies {
 
 	@Override
 	public String toString() {
+		if(isEmpty()) {
+			return "no copies found";
+		}
 		StringBuilder sb = new StringBuilder();
-
 		for(FileWithCopies fileWithCopies: allFileWithCopiesMap.values()) {
 			sb.append("\n---------------------------------\n");
 			sb.append(fileWithCopies.toString());

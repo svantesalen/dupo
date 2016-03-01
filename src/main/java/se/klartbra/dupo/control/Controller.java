@@ -50,7 +50,7 @@ public class Controller {
 		
 	}
 
-	private void addSubDirectories(List<File> directories) {
+	public void addSubDirectories(List<File> directories) {
 		List<File> subDirectories = FileOperations.getSubDirectoriesRecursively(directories);
 		directories.addAll(subDirectories);		
 	}

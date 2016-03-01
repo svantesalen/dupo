@@ -27,6 +27,16 @@ public class CopyFinder {
 		return allFilesWithCopies;
 	}
 
+	// just for test
+	public void findCopies(List<File> list) {
+		int size = list.size();
+		File currentDir;
+		for(int i=0; i<size; i++) {
+			currentDir = list.get(i);
+			findCopies(currentDir, list, i+1);
+		}
+	}
+	
 	/**
 	 * Find a copy of given directory in a list of directories.
 	 * @param dir The given directory
@@ -63,7 +73,10 @@ public class CopyFinder {
 	}	
 
 	/**
-	 * Two directories are copies if they contain same files and same sub-directories.
+	 * Two directories are copies if they contain same files and same sub-directories.<p>
+	 * If the name of a file or sub-directory has changed then directories are not equal.
+	 * (the sub-directories will be compared individually later and then listed as equal, though)
+	 * 
 	 * @param dir1
 	 * @param dir2
 	 * @return true if same
