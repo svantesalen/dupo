@@ -37,8 +37,6 @@ public class AllFilesWithCopies {
 		if(allFiles.contains(copy)) {
 			log.debug("###### Already added: "+copy.getAbsolutePath());
 			return;
-		} else {
-			log.debug("###### Not added before: "+copy.getAbsolutePath());			
 		}
 		FileWithCopies fileWithCopies = get(file);
 		if(fileWithCopies == null) {
@@ -62,11 +60,18 @@ public class AllFilesWithCopies {
 			if(entry.getKey() != entry.getValue().getFile()) {
 				log.error("****** PROGRAM ERROR ******");;
 			}
-		}
-
-		
+		}		
 		concatenateDuplicates();
-		
+		if(removeChildrenOfDuplicateParents()) {
+			refreshListForAllFiles(); 
+		}
+	}
+	
+	/**
+	 * Remove a {@link FileWithCopies} if all of it's directories are already represented by another {@link FileWithCopies}, not by themselves but by their parents.
+	 * @return
+	 */
+	private boolean removeChildrenOfDuplicateParents() {
 		Set<FileWithCopies> removeSet  = new HashSet<>();
 		for(FileWithCopies fileWithCopies: allFileWithCopiesMap.values()) {
 			if(allParentsHaveOwnCopies(fileWithCopies)) {
@@ -74,10 +79,25 @@ public class AllFilesWithCopies {
 				removeSet.add(fileWithCopies);
 			}
 		}
+		
+		if(removeSet.isEmpty()) {
+			return false;
+		}
+		
 		for(FileWithCopies fileWithCopies: removeSet) {
 			allFileWithCopiesMap.remove(fileWithCopies.getFile());
 		}
+		return true;
 	}
+	
+	private void refreshListForAllFiles() {
+		allFiles = new HashSet<>();
+		for(FileWithCopies fileWithCopies: allFileWithCopiesMap.values()) {
+			allFiles.addAll(fileWithCopies.getAllCopies());
+			allFiles.add(fileWithCopies.getFile());
+		}
+	}
+	
 
 	/**
 	 * If a dir is present in 2 FileWithCopies then concatenate those 2.
@@ -105,21 +125,32 @@ public class AllFilesWithCopies {
 			log.error("################### SHOULD NEVER HAPPEN! remove since duplicate: \n"+ fileWithCopiesToRemove.toString());
 			allFileWithCopiesMap.remove(fileWithCopiesToRemove);
 		}
-		return true;
-		
+		return true;	
 	}
 
+	/**
+	 * Check if the parents (recursively) of a {@link FileWithCopies} are themselves part of another FileWithCopies.
+	 * @param fileWithCopies
+	 * @return
+	 */
 	private boolean allParentsHaveOwnCopies(FileWithCopies fileWithCopies) {
 		for(File parent: fileWithCopies.getAllParents()) {
 			if(!allFiles.contains(parent)) {
+				log.debug("This parent is not part of allFiles:"+parent.getAbsolutePath());
 				return false;
 			}
+			log.debug("This parent is part of allFiles:"+parent.getAbsolutePath());
 		}
 		return true;
 	}
 
 	public boolean contains(File file) {
 		return allFiles.contains(file);
+	}
+	
+	// for test
+	public int getTotalNumberOfFiles() {
+		return allFiles.size();
 	}
 	
 	public int size() {
@@ -140,11 +171,20 @@ public class AllFilesWithCopies {
 			return "no copies found";
 		}
 		StringBuilder sb = new StringBuilder();
+		int i=1;
 		for(FileWithCopies fileWithCopies: allFileWithCopiesMap.values()) {
-			sb.append("\n---------------------------------\n");
+			sb.append("\n->>>>>>>>>>>>>>>"+ (i++) +">>>>>>>>>>>>>>>>>\n");
 			sb.append(fileWithCopies.toString());
+			sb.append("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
 		}
 		return sb.toString().trim();
+	}
+	
+	// for test (remove)
+	public void printAllFiles() {
+		for(File file: allFiles) {
+			System.out.println("path: "+ file.getAbsolutePath());
+		}
 	}
 
 

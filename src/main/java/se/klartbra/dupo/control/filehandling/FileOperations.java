@@ -3,6 +3,7 @@ package se.klartbra.dupo.control.filehandling;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,16 +121,70 @@ public class FileOperations {
 	}
 
 	/**
-	 * Check if one of the files is a symbolic link to the other.
-	 * 
+	 * Check if one of the files is a symbolic link to the other, or <br>
+	 * if one is a symbolik link and the other is not
 	 * @param file1
 	 * @param file2
 	 * @return true if same canonical paths
 	 * @throws IOException 
 	 */
 	public static boolean isSymbolicLinkTo(File file1, File file2) throws IOException {
-		// Is  link if same canonical path.
-		return file1.getCanonicalPath().equals(file2.getCanonicalPath());
+		boolean isSymlink1 = Files.isSymbolicLink(file1.toPath());
+		boolean isSymlink2 = Files.isSymbolicLink(file2.toPath());
+
+		if(isSymlink1 ^ isSymlink2) {
+			// one of them is a symbolic link, the other is not
+			// If one points to the other then they have same canonical paths
+			return file1.getCanonicalPath().equals(file2.getCanonicalPath());
+		}
+		return false;
+	}
+	
+	/**
+	 * Check if exactly one of the files is part of a symbolic link.
+	 * @param file1
+	 * @param file2
+	 * @return true if one file is part of a symbolic link, false if none or both
+	 * @throws IOException
+	 */
+	public static boolean isOnePartOfSymboplicLink(File file1, File file2) throws IOException {
+		return isPartOfSymbolicLinkPath(file1) ^ isPartOfSymbolicLinkPath(file2);
+	}
+	private static boolean isPartOfSymbolicLinkPath(File file) throws IOException {
+		log.debug("dir canon:"+file.getCanonicalPath());
+		log.debug("dir absol:"+file.getAbsolutePath());
+		return !file.getCanonicalPath().equals(file.getAbsolutePath());
+		
 	}
 
+	public static boolean hasSameType(File file1, File file2) throws IOException {
+		if(file1.isDirectory() && file2.isFile() || file2.isDirectory() && file1.isFile()) {
+			return false;
+		}
+		boolean isSymlink1 = Files.isSymbolicLink(file1.toPath());
+		boolean isSymlink2 = Files.isSymbolicLink(file2.toPath());
+		return isSymlink1 && isSymlink2 || !isSymlink1 && !isSymlink2;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

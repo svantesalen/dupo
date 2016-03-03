@@ -74,7 +74,6 @@ public class DupoListPanel implements ListSelectionListener {
 		if(allFilesWithCopies.size() == 0) {
 			return;
 		}
-		jList.setSize(jList.getWidth()+100, jList.getHeight());
 		this.allFilesWithCopies = allFilesWithCopies;
 		for(FileWithCopies fileWithCopies: allFilesWithCopies.toArray()) {
 			jListModel.addElement(fileWithCopies.getFile().getName());

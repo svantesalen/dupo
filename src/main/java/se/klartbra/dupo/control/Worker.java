@@ -82,6 +82,7 @@ public class Worker extends SwingWorker<AllFilesWithCopies, String>{
 				allFilesWithCopies.cleanUp();
 			}
 			MainWindow.getInstance().populateListPanel(allFilesWithCopies);
+			log.debug(allFilesWithCopies.toString());
 		} catch (InterruptedException e) {
 			log.error("Interrupted", e);
 		} catch (ExecutionException e) {

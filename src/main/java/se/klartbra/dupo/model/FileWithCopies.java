@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Contains the set of directories that was found equal during a search.
  * 
@@ -11,11 +14,13 @@ import java.util.Set;
  *
  */
 public class FileWithCopies {
+	private static Logger log = LogManager.getLogger(FileWithCopies.class);
+
 	private File file;
 	protected Set<File> copies = new HashSet<>();
-	
+
 	// TODO: remove file, should be enough with only copies.
-	
+
 	/**
 	 * CTOR
 	 * @param file Just the directory that was used for comparison.
@@ -24,6 +29,10 @@ public class FileWithCopies {
 	public FileWithCopies(File file, File copy) {
 		this.file = file;
 		addCopy(copy);	
+	}
+
+	public Set<File> getAllCopies() {
+		return copies;
 	}
 
 	/**
@@ -42,13 +51,18 @@ public class FileWithCopies {
 		}
 		return false;
 	}
-	
+
 	public File getFile() {
 		return file;
 	}
 	public boolean addCopy(File copy) {
 		return copies.add(copy);
 	}
+
+	/**
+	 * For each file, check what parent directories there are.
+	 * @return A set with all parent directories
+	 */
 
 	public Set<File> getAllParents() {
 		Set<File> allParents = new HashSet<>();
@@ -64,6 +78,25 @@ public class FileWithCopies {
 		}
 		return allParents;
 	}
+
+	public Set<File> getAllParentsNew() {
+		Set<File> allParents = getAllParents(file);
+		for(File dir: copies) {
+			allParents.addAll(getAllParents(dir));
+		}
+		return allParents;
+	}
+
+	public Set<File> getAllParents(File dir) {
+		Set<File> allParents = new HashSet<>();
+		File parent = dir.getParentFile();
+		if(parent !=null) {
+			allParents.add(parent);
+			allParents.addAll(getAllParents(parent));
+		}
+		return allParents;
+	}
+
 
 	@Override
 	public String toString() {

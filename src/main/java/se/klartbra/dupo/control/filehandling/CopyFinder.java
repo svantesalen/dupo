@@ -27,7 +27,7 @@ public class CopyFinder {
 		return allFilesWithCopies;
 	}
 
-	// just for test
+	// for test
 	public void findCopies(List<File> list) {
 		int size = list.size();
 		File currentDir;
@@ -35,6 +35,7 @@ public class CopyFinder {
 			currentDir = list.get(i);
 			findCopies(currentDir, list, i+1);
 		}
+		allFilesWithCopies.cleanUp();
 	}
 	
 	/**
@@ -42,7 +43,7 @@ public class CopyFinder {
 	 * @param dir The given directory
 	 * @param list A list of directories.
 	 * @param startIndex Start position
-	 * @return true if copies were found, else fale
+	 * @return true if copies were found, else false
 	 */
 	public boolean findCopies(File dir, List<File> list, int startIndex) {
 		log.debug("Find copies for: "+dir.getAbsolutePath());
@@ -87,10 +88,20 @@ public class CopyFinder {
 			return false;
 		}
 		if(FileOperations.inSameTree(dir1, dir2)) {
+			log.debug("skip since: inSameTree.");
 			return false;
 		}
 		try {
+			if(!FileOperations.hasSameType(dir1, dir2)) {
+				log.debug("skip since: different types.");
+				return false;
+			}
 			if(FileOperations.isSymbolicLinkTo(dir1, dir2)) {
+				log.debug("skip since: symbolic link.");
+				return false;
+			}
+			if(FileOperations.isOnePartOfSymboplicLink(dir1, dir2)) {
+				log.debug("skip since: symbolic link higher up in path, for one of the dirs.");
 				return false;
 			}
 		} catch (IOException e) {
@@ -99,14 +110,24 @@ public class CopyFinder {
 			// Maybe add to a list with directories we are unsure if they are symbolic links.
 			log.error("IOException at checking for symbolic link. Handle as if not a symbolik link.", e);
 		}
-		List<File> filesInDir1 = FileOperations.getFilesNonrecursively(dir1);
-		List<File> filesInDir2 = FileOperations.getFilesNonrecursively(dir2);
-		if(!hasSameFiles(filesInDir1, filesInDir2)) {
+
+		if(!hasSameFiles(
+				FileOperations.getFilesNonrecursively(dir1), 
+				FileOperations.getFilesNonrecursively(dir2))) 
+		{
+			log.debug("no same subdir");
 			return false;
 		}
-		List<File> subDirsInDir1 = FileOperations.getSubdirsNonrecursive(dir1);
-		List<File> subDirsInDir2 = FileOperations.getSubdirsNonrecursive(dir2);
-		return hasSameSubDirs(subDirsInDir1, subDirsInDir2);
+
+		if(!hasSameSubDirs(
+				FileOperations.getSubdirsNonrecursive(dir1), 
+				FileOperations.getSubdirsNonrecursive(dir2))) 
+		{
+			log.debug("no same subdir");
+			return false;
+		}
+		return true;
+
 	}
 
 	private boolean hasSameSubDirs(List<File> subDirsInDir1, List<File> subDirsInDir2) {
