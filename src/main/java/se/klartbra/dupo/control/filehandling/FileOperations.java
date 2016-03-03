@@ -122,7 +122,7 @@ public class FileOperations {
 
 	/**
 	 * Check if one of the files is a symbolic link to the other, or <br>
-	 * if one is a symbolik link and the other is not
+	 * if one is a symbolic link and the other is not
 	 * @param file1
 	 * @param file2
 	 * @return true if same canonical paths
@@ -139,7 +139,11 @@ public class FileOperations {
 		}
 		return false;
 	}
-	
+
+	public static boolean isSymlink(File file) {
+		return Files.isSymbolicLink(file.toPath());		
+	}
+
 	/**
 	 * Check if exactly one of the files is part of a symbolic link.
 	 * @param file1
@@ -154,7 +158,7 @@ public class FileOperations {
 		log.debug("dir canon:"+file.getCanonicalPath());
 		log.debug("dir absol:"+file.getAbsolutePath());
 		return !file.getCanonicalPath().equals(file.getAbsolutePath());
-		
+
 	}
 
 	public static boolean hasSameType(File file1, File file2) throws IOException {
@@ -164,6 +168,34 @@ public class FileOperations {
 		boolean isSymlink1 = Files.isSymbolicLink(file1.toPath());
 		boolean isSymlink2 = Files.isSymbolicLink(file2.toPath());
 		return isSymlink1 && isSymlink2 || !isSymlink1 && !isSymlink2;
+	}
+
+	public enum Type {
+		DIR, FILE;
+	}
+
+	public static int getNumberOfFiles(File dir) {
+		return getNumberOf(Type.FILE, dir);
+	}
+	
+	public static int getNumberOfSubDirectories(File dir) {
+		return getNumberOf(Type.DIR, dir);
+	}
+
+	public static int getNumberOf(Type type, File dir) {
+		if(dir.isFile()) {
+			log.error("Method called with a plain file as argument. Expected a directory.");
+			return 0;
+		}
+		int count = 0;
+		for(File file: dir.listFiles()) {
+			if(type == Type.DIR  && file.isDirectory() 
+					|| type == Type.FILE  && file.isFile()) 
+			{
+				count ++;
+			}
+		}
+		return count;
 	}
 }
 

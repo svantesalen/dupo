@@ -52,7 +52,7 @@ public class DupoTextArea implements PopUpHandler {
 		scrollPane.setBackground(DupoTheme.bgColor);
 
 		initiateBorders();
-		initiateContetns();
+		initiateContents();
 
 		popUpListener = new PopUpListener(this);
 		textPane.addMouseListener(popUpListener);
@@ -74,7 +74,7 @@ public class DupoTextArea implements PopUpHandler {
 		return styledDoc;
 	}
 
-	public void initiateContetns() {
+	public void initiateContents() {
 		textPane.setEditable(false);
 		textPane.setText("");
 		styledDoc = new DupoTextAreaStyledDocument(textPane);
@@ -120,7 +120,7 @@ public class DupoTextArea implements PopUpHandler {
 			File file = new File (selectedText);
 			Desktop desktop = Desktop.getDesktop();
 			desktop.open(file);
-		} catch (NullPointerException | IOException | UnsupportedOperationException e) {
+		} catch (NullPointerException | IOException | UnsupportedOperationException | IllegalArgumentException e) {
 			log.error("Not a file or cannot start desktop: "+selectedText, e);
 		}
 	}

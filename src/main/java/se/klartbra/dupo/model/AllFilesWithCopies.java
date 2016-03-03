@@ -53,9 +53,7 @@ public class AllFilesWithCopies {
 	 * To avoid having all children here.
 	 * When all files in a FilesWithCopies have parents who also are in a FilesWithCopies, then remove that FilesWithCopies.
 	 */
-	public void cleanUp() {
-		
-		// TODO: remove this check (just used during development)
+	public void cleanUp() {		
 		for(Entry<File, FileWithCopies> entry: allFileWithCopiesMap.entrySet()) {
 			if(entry.getKey() != entry.getValue().getFile()) {
 				log.error("****** PROGRAM ERROR ******");;
@@ -143,7 +141,7 @@ public class AllFilesWithCopies {
 		}
 		return true;
 	}
-
+	
 	public boolean contains(File file) {
 		return allFiles.contains(file);
 	}

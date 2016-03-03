@@ -45,9 +45,9 @@ public class Worker extends SwingWorker<AllFilesWithCopies, String>{
 		for(int i=0; i<size; i++) {
 			currentDir = directories.get(i);
 			if(copyFinder.findCopies(currentDir, directories, i+1)) {
-				publish(Words.get("COPIES_FOUND_FOR")+currentDir.getAbsolutePath());
+				publish("\n"+Words.get("COPIES_FOUND_FOR")+currentDir.getAbsolutePath()+" ");
 			} else {
-				publish(Words.get("SEARCHING")+" ("+i+Words.get("OF")+size+") "+currentDir.getAbsolutePath());				
+				publish("\n"+Words.get("SEARCHING")+" ("+i+Words.get("OF")+size+") "+currentDir.getAbsolutePath());				
 			}			
 			if(!ButtonPanel.getInstance().isFinding()) {	
 				break;

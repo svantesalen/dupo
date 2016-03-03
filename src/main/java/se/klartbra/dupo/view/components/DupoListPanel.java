@@ -22,6 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import se.klartbra.dupo.control.Controller;
+import se.klartbra.dupo.control.StyleWriter;
 import se.klartbra.dupo.control.language.Words;
 import se.klartbra.dupo.model.AllFilesWithCopies;
 import se.klartbra.dupo.model.FileWithCopies;
@@ -165,12 +166,21 @@ public class DupoListPanel implements ListSelectionListener {
 			return;
 		}
 		int index = jList.getSelectedIndex();
-		String contents = allFilesWithCopies.toArray().get(index).toString();
+		FileWithCopies fileWithCopies = allFilesWithCopies.toArray().get(index);
+		StyleWriter styleWriter = new StyleWriter(DupoTextArea.getInstance(), fileWithCopies);
+		styleWriter.write();
+	}
+	
+	public void valueChangedOld(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting()||jList.getSelectedIndex()<0) {
+			return;
+		}
+		int index = jList.getSelectedIndex();
+		String contents = allFilesWithCopies.toArray().get(index).toString();		
 		DupoTextArea textArea = DupoTextArea.getInstance();
-		textArea.initiateContetns();
+		textArea.initiateContents();
 		textArea.setText(contents);
 		DupoTextArea.getInstance().setCaretTopOfDoc();
-
 	}
 	public void repaint() {
 		border.setTitle(Words.get("BORDER_TEXT_COPIES"));

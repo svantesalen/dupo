@@ -19,6 +19,11 @@ public class DupoTheme {
 	public static final Font jListFont = new Font(getDefaultFontName(), Font.PLAIN, 16);
 	public static final Font borderTitleFont = new Font(getDefaultFontName(), Font.PLAIN, 13);
 	
+	public static final Color textAreaNumberOfSubDirsColor = Colors.lightYellow;
+	public static final Color textAreaNumberOfFilesColor = Colors.orange;
+	public static final Color textAreaSymbolicLinkColor = Colors.lighterBlueGreen;
+	public static final Color textAreaEmptyDirColor = Colors.lighterGreen;
+	public static final Color textAreaInfoColor = Colors.lighterGray;
 	public static final Color textAreaResultColor = Colors.white;
 	public static final Color textAreaProgressColor = Colors.lightYellow;
 

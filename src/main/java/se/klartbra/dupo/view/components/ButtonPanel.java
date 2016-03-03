@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import se.klartbra.dupo.control.Controller;
 import se.klartbra.dupo.control.language.LanguageController;
 import se.klartbra.dupo.control.language.Words;
 import se.klartbra.dupo.control.network.HttpBrowserController;
@@ -121,6 +122,7 @@ public class ButtonPanel {
 	}
 
 	public void handleHelp() {
+		Controller.getInstance().turnOnHelp();
 		boolean isOk = HttpBrowserController.open(Paths.SERVER_HELP_FILE);
 		if (!isOk) {
 			PopUp.errorMessage(jPanel, Words.get("NO_INTERNET_CONNECTION"));

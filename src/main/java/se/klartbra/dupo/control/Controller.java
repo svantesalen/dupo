@@ -23,7 +23,7 @@ public class Controller {
 
 	private static Logger log = LogManager.getLogger(Controller.class);
 	private static Controller instance;
-
+	private boolean help = false;
 	private Controller() {}
 
 	public static Controller getInstance() {
@@ -47,7 +47,6 @@ public class Controller {
 		addSubDirectories(directories);
 		Worker worker = new Worker(directories);
 		worker.execute();
-		
 	}
 
 	public void addSubDirectories(List<File> directories) {
@@ -93,5 +92,13 @@ public class Controller {
 		if(answer == Answer.YES) {
 			System.exit(0); // NOSONAR			
 		}
+	}
+
+	public void turnOnHelp() {
+		help = true;
+	}
+
+	public boolean isHelpOn() {
+		return help;
 	}
 }
