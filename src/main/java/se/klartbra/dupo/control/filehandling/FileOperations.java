@@ -177,7 +177,7 @@ public class FileOperations {
 	public static int getNumberOfFiles(File dir) {
 		return getNumberOf(Type.FILE, dir);
 	}
-	
+
 	public static int getNumberOfSubDirectories(File dir) {
 		return getNumberOf(Type.DIR, dir);
 	}
@@ -188,6 +188,11 @@ public class FileOperations {
 			return 0;
 		}
 		int count = 0;
+		File[] files = dir.listFiles();
+		if(files == null) {
+			return 0;
+		}
+		
 		for(File file: dir.listFiles()) {
 			if(type == Type.DIR  && file.isDirectory() 
 					|| type == Type.FILE  && file.isFile()) 
@@ -195,8 +200,19 @@ public class FileOperations {
 				count ++;
 			}
 		}
+
 		return count;
 	}
+	
+	public static String toString(List<File> fileList) {
+		StringBuilder sb = new StringBuilder();
+		for(File f: fileList) {
+			sb.append(f.getAbsolutePath());
+			sb.append("\n");
+		}
+		return sb.toString().trim();
+	}
+
 }
 
 

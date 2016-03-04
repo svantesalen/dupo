@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 
 import se.klartbra.dupo.control.filehandling.FileOperations;
 import se.klartbra.dupo.control.language.Words;
-import se.klartbra.dupo.view.MainWindow;
 import se.klartbra.dupo.view.PopUp;
 import se.klartbra.dupo.view.PopUp.Answer;
 
@@ -42,13 +41,13 @@ public class Controller {
 			return;
 		}
 		log.debug("Selected directories:\n"+toString(directories));
-		MainWindow.getInstance().setText(Words.get("MESSAGE_LOOKING_FOR_COPIES")+":\n");
-		MainWindow.getInstance().addText(toString(directories));
-		addSubDirectories(directories);
+
+//		addSubDirectories(directories);
 		Worker worker = new Worker(directories);
 		worker.execute();
 	}
 
+	// for test
 	public void addSubDirectories(List<File> directories) {
 		List<File> subDirectories = FileOperations.getSubDirectoriesRecursively(directories);
 		directories.addAll(subDirectories);		

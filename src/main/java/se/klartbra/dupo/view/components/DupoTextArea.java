@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import se.klartbra.dupo.control.language.LanguageController;
 import se.klartbra.dupo.control.language.Words;
 import se.klartbra.dupo.model.FileWithCopies;
+import se.klartbra.dupo.view.PopUp;
 import se.klartbra.dupo.view.look.DupoTheme;
 
 /**
@@ -109,22 +110,38 @@ public class DupoTextArea implements PopUpHandler {
 	@Override
 	public void copy() {
 		String selectedText = textPane.getSelectedText();
-		if (selectedText == null || selectedText.trim().isEmpty()) {
-			return;
-		}
-		StringSelection stringSelection = new StringSelection(selectedText);
+		String path = getPath(selectedText);
+		log.info("path="+path);
+		StringSelection stringSelection = new StringSelection(path);
 		Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 		clpbrd.setContents(stringSelection, null);		
-		
+
 		try {
-			File file = new File (selectedText);
+			File file = new File (path);
 			Desktop desktop = Desktop.getDesktop();
 			desktop.open(file);
 		} catch (NullPointerException | IOException | UnsupportedOperationException | IllegalArgumentException e) {
-			log.error("Not a file or cannot start desktop: "+selectedText, e);
+			log.error("Not a file or cannot start desktop: "+path, e);
 		}
 	}
-	 
+
+	private String getPath(String text) {
+		log.info("text="+text);
+		try {
+			int beginIndex = 0;
+			if(text.startsWith("//")) {
+				beginIndex++;
+			}
+			int endIndex = text.lastIndexOf("  ");
+			String path = text.substring(beginIndex, endIndex);
+			return path.trim();
+		} catch (RuntimeException e) {
+			log.error("Not a path", e);
+			PopUp.errorMessage(null, Words.get("MESSAGE_NOT_A_PATH"));
+			return "";
+		}
+	}
+
 	@Override
 	public void language() {
 		LanguageController.newLanguage();		

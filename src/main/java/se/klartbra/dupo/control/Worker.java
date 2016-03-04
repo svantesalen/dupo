@@ -1,6 +1,7 @@
 package se.klartbra.dupo.control;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -10,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import se.klartbra.dupo.control.filehandling.CopyFinder;
+import se.klartbra.dupo.control.filehandling.FileOperations;
 import se.klartbra.dupo.control.language.Words;
 import se.klartbra.dupo.model.AllFilesWithCopies;
 import se.klartbra.dupo.view.MainWindow;
@@ -24,7 +26,8 @@ import se.klartbra.dupo.view.components.ButtonPanel;
  */
 public class Worker extends SwingWorker<AllFilesWithCopies, String>{
 	private static Logger log = LogManager.getLogger(Worker.class);
-
+	private static final int PUBLISH_INTERVAL=300;
+	private static final int PUBLISH_CR_INTERVAL=50000;
 	private List<File> directories;
 
 	/**
@@ -37,8 +40,9 @@ public class Worker extends SwingWorker<AllFilesWithCopies, String>{
 
 	@Override
 	protected AllFilesWithCopies doInBackground() throws Exception {
+		addSubDirectories(directories);
 		int size = directories.size();
-		publish(Words.get("NUMBER_OF_DIR_TO_SEARCH")+ size);
+		publish("\n"+Words.get("NUMBER_OF_DIR_TO_SEARCH")+ " "+size);
 		MainWindow.getInstance().startFinding();
 		CopyFinder copyFinder = new CopyFinder();
 		File currentDir;
@@ -54,6 +58,47 @@ public class Worker extends SwingWorker<AllFilesWithCopies, String>{
 			}
 		}
 		return copyFinder.getAllFilesWithCopies();
+	}
+
+	private void addSubDirectories(List<File> directories) {
+		MainWindow.getInstance().setText(Words.get("MESSAGE_FIND_ALL_SUBDIRS")+"\n");
+		MainWindow.getInstance().addText(FileOperations.toString(directories));
+
+		List<File> subDirectories = getSubDirectoriesRecursively(directories);
+		directories.addAll(subDirectories);		
+	}
+
+	public  List<File> getSubDirectoriesRecursively(List<File> directories) {
+		List<File> subDirectories = new ArrayList<>();
+		for(File dir: directories) {
+			subDirectories.addAll(getSubDirectoriesRecursively(dir));
+		}
+		return subDirectories;
+	}
+
+	private  List<File> getSubDirectoriesRecursively(File dir) {
+		List<File> subDirectories = new ArrayList<>();
+		int counter = 1;
+		File[] files = dir.listFiles();
+		if(files == null) {
+			return subDirectories;			
+		}
+		for(File file: files) {
+			maybePublish(counter++);
+			if(file.isDirectory()) {
+				subDirectories.add(file);
+				subDirectories.addAll(getSubDirectoriesRecursively(file));
+			}
+		}
+		return subDirectories;
+	}
+
+	private void maybePublish(int counter) {
+		if(counter % PUBLISH_CR_INTERVAL == 0) {
+			publish("\n.");
+		} else if(counter % PUBLISH_INTERVAL  == 0) {
+			publish(".");
+		}
 	}
 
 	/**
