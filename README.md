@@ -28,10 +28,11 @@ Directories are copies if they contain:
 
 Improvements
 ------------
+- Some refactoring neeed (code started to get messy after test added first time)
+- method added only for test (not so great)
 - I am pretty sure the search algorithm can improved.
-- TEST: test cases must be added (per use case)
-- TEST: test on various platforms
+- TEST: more test cases with links
+- TEST: test links various platforms
 - language is not stored on disk
 - increase JList width
-- some parts are not translated to swedish
 
