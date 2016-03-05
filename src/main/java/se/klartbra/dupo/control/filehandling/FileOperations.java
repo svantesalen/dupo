@@ -155,8 +155,6 @@ public class FileOperations {
 		return isPartOfSymbolicLinkPath(file1) ^ isPartOfSymbolicLinkPath(file2);
 	}
 	private static boolean isPartOfSymbolicLinkPath(File file) throws IOException {
-		log.debug("dir canon:"+file.getCanonicalPath());
-		log.debug("dir absol:"+file.getAbsolutePath());
 		return !file.getCanonicalPath().equals(file.getAbsolutePath());
 
 	}

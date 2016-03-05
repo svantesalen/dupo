@@ -46,7 +46,7 @@ public class CopyFinder {
 	 * @return true if copies were found, else false
 	 */
 	public boolean findCopies(File dir, List<File> list, int startIndex) {
-		log.debug("Find copies for: "+dir.getAbsolutePath());
+		log.info("Find copies for: "+dir.getAbsolutePath());
 		boolean found = false;
 		File lastCopy = null;
 		for(int i=startIndex; i<list.size(); i++) {
@@ -64,7 +64,7 @@ public class CopyFinder {
 				}
 			}			
 			if(areCopies(dir, list.get(i))) {
-				log.debug("Found a copy: "+list.get(i).getAbsolutePath());
+				log.info("Found a copy: "+list.get(i).getAbsolutePath());
 				allFilesWithCopies.add(dir, list.get(i));
 				lastCopy = list.get(i);
 				found = true;
@@ -115,7 +115,7 @@ public class CopyFinder {
 				FileOperations.getFilesNonrecursively(dir1), 
 				FileOperations.getFilesNonrecursively(dir2))) 
 		{
-			log.debug("no same subdir");
+			log.debug("not same subdir");
 			return false;
 		}
 
@@ -123,7 +123,7 @@ public class CopyFinder {
 				FileOperations.getSubdirsNonrecursive(dir1), 
 				FileOperations.getSubdirsNonrecursive(dir2))) 
 		{
-			log.debug("no same subdir");
+			log.debug("not same subdir");
 			return false;
 		}
 		return true;

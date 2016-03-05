@@ -19,10 +19,10 @@ public class DupoEnvironment {
 	public static boolean runningFromJar() {
 		String path = DupoEnvironment.class.getResource("DupoEnvironment.class").toString();
 		if(path.startsWith("file")) {
-			log.debug("Running from eclipse or similar.");
+			log.info("Running from eclipse or similar.");
 			return false;
 		}
-		log.debug("Running from inside a jar.");
+		log.info("Running from inside a jar.");
 		return true;
 	}
 

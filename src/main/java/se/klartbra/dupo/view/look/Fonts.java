@@ -51,7 +51,6 @@ public class Fonts {
 	}
 
 	private static Font loadFont() throws FontFormatException, IOException {
-		log.debug("");
 		if(DupoEnvironment.runningFromJar()) {
 			log.debug("");
 			try {
@@ -78,7 +77,6 @@ public class Fonts {
 
 
 	private static Font loadFontEclipse() throws FontFormatException, IOException {
-		log.debug("");
 		ClassLoader classLoader = StartHere.class.getClassLoader();
 		File file = new File(classLoader.getResource("fonts/DroidSans.ttf").getFile());
 		return Font.createFont(Font.TRUETYPE_FONT, file);

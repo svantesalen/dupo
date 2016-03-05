@@ -41,8 +41,6 @@ public class Controller {
 			return;
 		}
 		log.debug("Selected directories:\n"+toString(directories));
-
-//		addSubDirectories(directories);
 		Worker worker = new Worker(directories);
 		worker.execute();
 	}

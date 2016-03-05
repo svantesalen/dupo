@@ -24,7 +24,7 @@ public class HttpBrowserController {
 		if(url==null||url.isEmpty() ) {
 			server = Paths.GOOGLE_SEARCH_URL;
 		}
-		log.debug(server);
+		log.info(server);
 		if(Desktop.isDesktopSupported()) {
 			Desktop desktop = Desktop.getDesktop();
 			try {

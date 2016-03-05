@@ -6,9 +6,6 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 
 /**
  * A helper class to facilitate the use of JFileChooser and JOptionPane.
@@ -17,7 +14,6 @@ import org.apache.logging.log4j.Logger;
  */
 public class PopUp {
 
-	private static Logger log = LogManager.getLogger(PopUp.class);
 	public enum Answer {
 		YES,NO
 	}
@@ -66,7 +62,6 @@ public class PopUp {
 			String title,
 			String text) 
 	{
-		log.debug("enter");
 		int n = JOptionPane.showConfirmDialog(
 				component, 
 				text, 

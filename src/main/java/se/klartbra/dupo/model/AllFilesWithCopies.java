@@ -35,7 +35,6 @@ public class AllFilesWithCopies {
 
 	public  void add(File file, File copy) {
 		if(allFiles.contains(copy)) {
-			log.debug("###### Already added: "+copy.getAbsolutePath());
 			return;
 		}
 		FileWithCopies fileWithCopies = get(file);
