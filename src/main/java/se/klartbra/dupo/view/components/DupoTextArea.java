@@ -127,6 +127,7 @@ public class DupoTextArea implements PopUpHandler {
 
 	private String getPath(String text) {
 		log.info("text="+text);
+		
 		try {
 			int beginIndex = 0;
 			if(text.startsWith("//")) {

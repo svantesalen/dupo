@@ -46,6 +46,7 @@ public class DupoListPanel implements ListSelectionListener {
 	private JList<String> jList;
 	TitledBorder border;
 	private AllFilesWithCopies allFilesWithCopies;
+	private String cellWidth = "                                                                 ";
 
 	/**
 	 * CTOR
@@ -55,6 +56,7 @@ public class DupoListPanel implements ListSelectionListener {
 		instance=this;
 		this.allFilesWithCopies = allFilesWithCopies;
 		jList = new JList<>(jListModel);
+		jList.setPrototypeCellValue(cellWidth);
 		setupScrollableSelectionList(jListModel);
 		JScrollPane listScrollPane = new JScrollPane(jList);
 		initiateBorders(listScrollPane);
