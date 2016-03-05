@@ -34,5 +34,4 @@ Improvements
 - TEST: more test cases with links
 - TEST: test links various platforms
 - language is not stored on disk
-- increase JList width
-
+- log file not defined
