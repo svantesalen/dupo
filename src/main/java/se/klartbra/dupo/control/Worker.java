@@ -40,10 +40,10 @@ public class Worker extends SwingWorker<AllFilesWithCopies, String>{
 
 	@Override
 	protected AllFilesWithCopies doInBackground() throws Exception {
+		MainWindow.getInstance().startFinding();
 		addSubDirectories(directories);
 		int size = directories.size();
 		publish("\n"+Words.get("NUMBER_OF_DIR_TO_SEARCH")+ " "+size);
-		MainWindow.getInstance().startFinding();
 		CopyFinder copyFinder = new CopyFinder();
 		File currentDir;
 		for(int i=0; i<size; i++) {
